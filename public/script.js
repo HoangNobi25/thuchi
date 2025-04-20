@@ -1,4 +1,4 @@
-const APIAPI_BASE_URL = 'https://your-heroku-app.name/herokuapp.com';
+const APIAPI_BASE_URL = 'https://chitieu1/herokuapp.com';
 
 const incomeForm = document.getElementById('income-form');
 const expenseForm = document.getElementById('expense-form');
