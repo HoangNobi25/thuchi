@@ -1,19 +1,21 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const cors = require('cors');
-const { Low } = require('lowdb');
-const { JSONFile } = require('lowdb/node');
-const ExcelJS = require('exceljs');
-const path = require('path');
+import express from 'express';
+import bodyParser from 'body-parser';
+import cors from 'cors';
+import { Low, JSONFile } from 'lowdb';
+import ExcelJS from 'exceljs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 // Setup lowdb
 const file = path.join(__dirname, 'db.json');
 const adapter = new JSONFile(file);
-const defaultData = { incomes: [], expenses: [] };
-const db = new Low(adapter, defaultData);
+const db = new Low(adapter);
 
 // Middleware
 app.use(cors());
@@ -125,36 +127,6 @@ app.delete('/api/expenses/:id', async (req, res) => {
   res.json({ success: true });
 });
 
-// Update income
-app.put('/api/incomes/:id', async (req, res) => {
-  const id = parseInt(req.params.id);
-  const { amount, type, date, note } = req.body;
-  await db.read();
-  const income = db.data.incomes.find(i => i.id === id);
-  if (!income) {
-    return res.status(404).json({ error: 'Income not found' });
-  }
-  if (amount !== undefined) income.amount = amount;
-  if (type !== undefined) income.type = type;
-  if (date !== undefined) income.date = date;
-  if (note !== undefined) income.note = note;
-  await db.write();
-  res.json(income);
-});
-
-// Delete income
-app.delete('/api/incomes/:id', async (req, res) => {
-  const id = parseInt(req.params.id);
-  await db.read();
-  const index = db.data.incomes.findIndex(i => i.id === id);
-  if (index === -1) {
-    return res.status(404).json({ error: 'Income not found' });
-  }
-  db.data.incomes.splice(index, 1);
-  await db.write();
-  res.status(200).json({ success: true });
-});
-
 // Get totals for incomes or expenses by period
 app.get('/api/totals', async (req, res) => {
   const { type, period } = req.query; // type: income or expense, period: day, week, month
@@ -207,41 +179,6 @@ app.get('/api/export', async (req, res) => {
 
   await workbook.xlsx.write(res);
   res.end();
-});
-
-app.get('/api/balances', async (req, res) => {
-  const { start, end } = req.query;
-  if (!start || !end) {
-    return res.status(400).json({ error: 'Missing start or end query parameter' });
-  }
-  await db.read();
-
-  // Parse dates as UTC to avoid timezone issues
-  const startDate = new Date(start + 'T00:00:00Z');
-  const endDate = new Date(end + 'T23:59:59Z');
-
-  // Calculate sum of incomes and expenses before start date for beginning balance
-  const incomesBeforeStart = db.data.incomes
-    .filter(i => new Date(i.date) < startDate)
-    .reduce((sum, i) => sum + i.amount, 0);
-  const expensesBeforeStart = db.data.expenses
-    .filter(e => new Date(e.date) < startDate)
-    .reduce((sum, e) => sum + e.amount, 0);
-  const beginningBalance = incomesBeforeStart - expensesBeforeStart;
-
-  // Calculate sum of incomes and expenses up to end date for ending balance
-  const incomesUpToEnd = db.data.incomes
-    .filter(i => new Date(i.date) <= endDate)
-    .reduce((sum, i) => sum + i.amount, 0);
-  const expensesUpToEnd = db.data.expenses
-    .filter(e => new Date(e.date) <= endDate)
-    .reduce((sum, e) => sum + e.amount, 0);
-  const endingBalance = incomesUpToEnd - expensesUpToEnd;
-
-  res.json({
-    beginningBalance,
-    endingBalance,
-  });
 });
 
 // Start server
