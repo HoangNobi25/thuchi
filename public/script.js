@@ -1,3 +1,5 @@
+const APIAPI_BASE_URL = 'https://your-heroku-app.name/herokuapp.com';
+
 const incomeForm = document.getElementById('income-form');
 const expenseForm = document.getElementById('expense-form');
 const incomeHistoryTableBody = document.querySelector('#income-history-table tbody');
