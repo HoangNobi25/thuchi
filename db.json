@@ -1,0 +1,19 @@
+{
+  "incomes": [
+    {
+      "id": 1745133618401,
+      "amount": 21000,
+      "type": "cash",
+      "date": "2025-04-20",
+      "note": "Tiền khởi đầu"
+    },
+    {
+      "id": 1745133695535,
+      "amount": 4927.91,
+      "type": "card",
+      "date": "2025-04-20",
+      "note": "Tiền thẻ cá nhân"
+    }
+  ],
+  "expenses": []
+}

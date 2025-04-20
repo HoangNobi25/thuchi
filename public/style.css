@@ -1,0 +1,195 @@
+/* General styles */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 20px auto;
+  max-width: 900px;
+  background: #f9f9f9;
+  color: #333;
+  line-height: 1.6;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+h1, h2 {
+  text-align: center;
+  color: #2c3e50;
+}
+
+form {
+  margin-bottom: 20px;
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  animation: fadeInSlideDown 0.5s ease forwards;
+}
+
+label {
+  display: block;
+  margin-top: 10px;
+  font-weight: 600;
+  color: #34495e;
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: 8px 10px;
+  margin-top: 6px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1em;
+  transition: border-color 0.3s ease;
+  box-sizing: border-box;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: #2980b9;
+  outline: none;
+  box-shadow: 0 0 5px rgba(41, 128, 185, 0.5);
+}
+
+button {
+  margin-top: 15px;
+  padding: 10px 18px;
+  background-color: #2980b9;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-weight: 700;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 2px 6px rgba(41, 128, 185, 0.4);
+  animation: fadeInSlideUp 0.5s ease forwards;
+}
+
+button:hover {
+  background-color: #1c5980;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  animation: fadeIn 0.6s ease forwards;
+}
+
+th, td {
+  border-bottom: 1px solid #ddd;
+  padding: 12px 15px;
+  text-align: left;
+  color: #2c3e50;
+}
+
+th {
+  background-color: #2980b9;
+  color: white;
+  font-weight: 700;
+}
+
+tr:hover {
+  background-color: #f1f9ff;
+}
+
+.edit-btn, .delete-btn {
+  cursor: pointer;
+  color: #2980b9;
+  text-decoration: underline;
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 1em;
+  margin-right: 10px;
+  transition: color 0.3s ease;
+}
+
+.edit-btn:hover {
+  color: #1c5980;
+}
+
+.delete-btn:hover {
+  color: #c0392b;
+}
+
+.totals {
+  margin-top: 30px;
+  background: #fff;
+  padding: 15px 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  animation: fadeInSlideDown 0.5s ease forwards;
+}
+
+.filter-group {
+  margin-bottom: 15px;
+}
+
+.filter-group label {
+  margin-right: 10px;
+  font-weight: 600;
+}
+
+#totals-display div {
+  padding: 6px 0;
+  font-weight: 600;
+  color: #34495e;
+}
+
+/* Animations */
+@keyframes fadeInSlideDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInSlideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Animations for adding/removing rows */
+@keyframes rowFadeIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes rowFadeOut {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+}
